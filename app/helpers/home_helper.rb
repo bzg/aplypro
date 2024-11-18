@@ -47,7 +47,7 @@ module HomeHelper
     render partial: "home/attributive_decision_form", locals: { establishment: current_establishment,
                                                                 count: count,
                                                                 disabled: disabled,
-                                                                title: title}
+                                                                title: title }
   end
 
   def progress_badge_status(count, total)
