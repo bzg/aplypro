@@ -10,20 +10,19 @@ class EstablishmentsController < ApplicationController
 
   include Zipline
 
-  def create_attributive_decisions
-    mark_attributive_decision_generation!
+  def manage_attributive_decisions
+    case route_to(params)
+    when :generate
+      mark_attributive_decision_generation!
+      schoolings = schoolings_for_selected_school_year.without_attributive_decisions.to_a
+    when :regenerate
+      mark_attributive_decision_generation_all!
+      schoolings = schoolings_for_selected_school_year.to_a
+    else
+      schoolings = []
+    end
 
-    GenerateAttributiveDecisionsJob.perform_later(schoolings_for_selected_school_year
-                                                    .without_attributive_decisions
-                                                    .to_a)
-
-    redirect_to root_path
-  end
-
-  def reissue_attributive_decisions
-    mark_attributive_decision_generation_all!
-
-    GenerateAttributiveDecisionsJob.perform_later(schoolings_for_selected_school_year.to_a)
+    GenerateAttributiveDecisionsJob.perform_later(schoolings)
 
     redirect_to root_path
   end
@@ -39,6 +38,10 @@ class EstablishmentsController < ApplicationController
   end
 
   private
+
+  def route_to(params)
+    params[:route_to].keys.first.to_sym
+  end
 
   def check_confirmed_director_for_attributive_decision
     check_confirmed_director(alert_message: t("panels.attributive_decisions.not_director"))

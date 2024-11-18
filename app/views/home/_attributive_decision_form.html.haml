@@ -1,12 +1,12 @@
 - disabled = !current_user.director?
 - title = disabled ? t("panels.attributive_decisions.not_validatable") : ""
 
-= form_with method: :post do |form|
+= form_with method: :post, url: school_year_establishment_manage_attributive_decisions_path(selected_school_year, current_establishment), multipart: true  do |form|
   - if !disabled
     = render partial: "shared/confirmed_director", locals: { message: t("validations.confirm_director") }
 
   - if current_establishment.missing_attributive_decisions?(selected_school_year)
-    = form.submit t("panels.attributive_decisions.generate", count: count), formaction: school_year_establishment_create_attributive_decisions_path(selected_school_year, current_establishment), class: "fr-btn fr-btn--primary fr-mb-1w", disabled: disabled, title: title
+    = form.submit t("panels.attributive_decisions.generate", count: count), name: "route_to[generate]", class: "fr-btn fr-btn--primary fr-mb-1w", disabled: disabled, title: title
 
   - if current_establishment.some_attributive_decisions?(selected_school_year)
-    = form.submit t("panels.attributive_decisions.regenerate.one"), formaction: school_year_establishment_reissue_attributive_decisions_path(selected_school_year, current_establishment), class: "fr-btn fr-btn--primary", disabled: disabled, title: title
+    = form.submit t("panels.attributive_decisions.regenerate.one"), name: "route_to[regenerate]", class: "fr-btn fr-btn--primary", disabled: disabled, title: title

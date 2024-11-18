@@ -46,8 +46,7 @@ Rails.application.routes.draw do
     get "/home", to: "home#home"
 
     resources :establishments, only: [] do
-      post "create_attributive_decisions"
-      post "reissue_attributive_decisions"
+      post "manage_attributive_decisions"
       post "download_attributive_decisions"
     end
 
