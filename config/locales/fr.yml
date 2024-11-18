@@ -395,6 +395,7 @@ fr:
       not_director: &not_director_error Vous devez être chef d'établissement
   panels:
     attributive_decisions:
+      not_validatable: "Vous ne pouvez pas valider cette demande de paiement car vous n'êtes pas directeur de l'établissement."
       download:
         one: Télécharger la décision d'attribution pour vérification et distribution
         other: Télécharger %{count} décisions d'attribution pour vérification et distribution

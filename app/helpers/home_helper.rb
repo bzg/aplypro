@@ -29,33 +29,25 @@ module HomeHelper
     )
   end
 
-  def attributive_decisions_reissue_button
-    return unless current_establishment.with_attributive_decisions?(selected_school_year)
-
+  def attributive_decisions_reissue_button(disabled, title)
     button_to "Rééditer les décisions d'attribution",
               school_year_establishment_reissue_attributive_decisions_path(selected_school_year, current_establishment),
               method: :post,
-              class: "fr-btn fr-btn--tertiary"
+              class: "fr-btn fr-btn--tertiary",
+              disabled: disabled,
+              title: title
   end
 
-  def attributive_decisions_generation_form
-    return cannot_generate_attributive_decisions_button unless current_user.can_try_to_generate_attributive_decisions?
-
+  def attributive_decisions_generation_form(disabled, title)
     count = current_establishment.schoolings.without_attributive_decisions
                                  .joins(:classe)
                                  .where(classe: { school_year: selected_school_year })
                                  .count
 
-    render partial: "home/attributive_decision_form", locals: { establishment: current_establishment, count: count }
-  end
-
-  def cannot_generate_attributive_decisions_button
-    button_to(
-      t("panels.attributive_decisions.not_allowed"),
-      "#",
-      class: "fr-btn fr-btn--primary",
-      disabled: true
-    )
+    render partial: "home/attributive_decision_form", locals: { establishment: current_establishment,
+                                                                count: count,
+                                                                disabled: disabled,
+                                                                title: title}
   end
 
   def progress_badge_status(count, total)

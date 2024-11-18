@@ -13,8 +13,10 @@
     %p Les décisions d'attribution sont en train d'être éditées, veuillez rafraichir la page dans quelques minutes. Vous pouvez commencer à remplir des coordonnées bancaires ou des PFMPs pendant ce temps.
 - else
   .buttons-group
-    - if current_establishment.missing_attributive_decisions?(selected_school_year)
-      = attributive_decisions_generation_form
+    - disabled = current_user.director?
+    - title = disabled ? t("panels.attributive_decisions.not_validatable") : ""
+    - if current_establishment.with_attributive_decisions?(selected_school_year)
+      = attributive_decisions_reissue_button(disabled, title)
+    - else
+      = attributive_decisions_generation_form(disabled, title)
     = attributive_decisions_download_button
-    - if current_establishment.with_attributive_decisions?(selected_school_year) && current_user.director?
-      = attributive_decisions_reissue_button
