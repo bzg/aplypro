@@ -22,25 +22,18 @@ module HomeHelper
       t("panels.attributive_decisions.download", count: count),
       school_year_establishment_download_attributive_decisions_path(selected_school_year, current_establishment),
       method: :post,
-      class: "fr-btn fr-btn--primary",
+      class: "fr-btn fr-btn--secondary",
       data: { turbo: false }
     )
   end
 
-  def attributive_decisions_reissue_form
-    url = school_year_establishment_reissue_attributive_decisions_path(selected_school_year, current_establishment)
-
-    render partial: "home/attributive_decision_form", locals: { count: 1, url: url, action: "regenerate" }
-  end
-
-  def attributive_decisions_generation_form
+  def attributive_decisions_form
     count = current_establishment.schoolings.without_attributive_decisions
                                  .joins(:classe)
                                  .where(classe: { school_year: selected_school_year })
                                  .count
-    url = school_year_establishment_create_attributive_decisions_path(selected_school_year, current_establishment)
 
-    render partial: "home/attributive_decision_form", locals: { count: count, url: url, action: "generate" }
+    render partial: "home/attributive_decision_form", locals: { count: count }
   end
 
   def progress_badge_status(count, total)
