@@ -395,13 +395,15 @@ fr:
       not_director: &not_director_error Vous devez être chef d'établissement
   panels:
     attributive_decisions:
-      not_validatable: "Vous ne pouvez pas valider cette demande de paiement car vous n'êtes pas directeur de l'établissement."
+      not_validatable: "Vous ne pouvez pas éditer des décisions d'attributions car vous n'êtes pas directeur de l'établissement."
       download:
         one: Télécharger la décision d'attribution pour vérification et distribution
         other: Télécharger %{count} décisions d'attribution pour vérification et distribution
       generate:
         one: Éditer la décision d'attribution manquante
         other: Éditer %{count} décisions d'attribution manquantes
+      regenerate:
+        one: Rééditer les décisions d'attribution
       confirm_director: Je confirme que <strong>je suis le responsable légal de l'établissement</strong> et qu'en tant qu'<strong>ordonnateur</strong> mon nom peut être inscrit sur les documents générés, et que je les valide informatiquement.
       confirm_director_information: "(Vous remplacerez %{name} en tant que chef d'établissement)"
       not_allowed: Vous n'avez pas le droit d'éditer les décisions d'attribution

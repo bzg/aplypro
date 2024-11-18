@@ -1,4 +1,7 @@
-= form_with method: :post, url: school_year_establishment_create_attributive_decisions_path(selected_school_year, establishment) do |form|
+- disabled = !current_user.director?
+- title = disabled ? t("panels.attributive_decisions.not_validatable") : ""
+
+= form_with method: :post, url: url do |form|
   - if !disabled
     = render partial: "shared/confirmed_director", locals: { message: t("validations.confirm_director") }
-  = form.submit t("panels.attributive_decisions.generate", count: count), class: "fr-btn fr-btn--secondary", disabled: disabled, title: title
+  = form.submit t("panels.attributive_decisions.#{action}", count: count), class: "fr-btn fr-btn--secondary", disabled: disabled, title: title
